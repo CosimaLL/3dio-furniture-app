@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+  <head>
+    <title>3D.io furniture library</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.4/webcomponents-lite.js"></script>
+    <link href="http://polygit.org/components/polymer/polymer.html" rel="import">
+    <link rel="import" href="http://polygit.org/components/polymer/lib/elements/dom-module.html">
+    <link rel="import" href="http://polygit.org/components/polymer/lib/elements/dom-bind.html">
+    <link rel="import" href="http://polygit.org/components/polymer/lib/elements/dom-repeat.html">
+
+    <script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"></script>
+  </head>
+  <body>
+    <dom-module id="furniture-app">
+      <template>
+        <style>
+          li {
+            display: inline-block;
+            text-align: center;
+            margin: 2em;
+            max-width: 100px;
+            max-height: 150px;
+          }
+          li img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100px;
+            max-height: 100px;
+            height: auto;
+          }
+
+          .side {
+            float: right;
+            width: 33vw;
+          }
+
+          .top {
+            top: 0;
+            height: 50vh;
+          }
+        </style>
+
+        <link rel="stylesheet" href="prism.min.css">
+
+        <iron-input bind-value="{{search}}">
+          <input value="{{search::input}}">
+        </iron-input>
+        <h2>Results</h2>
+
+        <div class="side top">
+          <h2>{{selectedProduct.productDisplayName}}</h2>
+          <img src="{{selectedProduct.preview}}">
+          <p>ID: {{selectedProduct.productResourceId}}</p>
+          <pre><code id="snippet" class="language-markup">
+&lt;a-scene&gt;
+  &lt;a-entity 
+    io3d-furniture="id:{{selectedProduct.productResourceId}}"&gt;
+  &lt;/a-entity&gt;
+&lt;/a-scene&gt;
+          </code></pre>
+        </div>
+
+        <ul>
+          <template is="dom-repeat" items="{{results}}">
+            <li on-click="selectProduct">
+              <img src="https://storage.3d.io{{item.preview}}" alt="{{item.productDisplayName}}">
+              {{item.productDisplayName}}
+            </li>
+          </template>
+        </ul>
+      </template>
+      <script>
+        class FurnitureApp extends Polymer.Element {
+          static get is() { return 'furniture-app' }
+          static get properties() {
+            return {
+              search: {
+                type: String,
+                value: '',
+                observer: 'findProducts'
+              },
+              results: {
+                type: Array,
+                value: function() { return [] }
+              },
+              selectedProduct: {
+                type: Object,
+                value: null
+              }
+            }
+          }
+
+          findProducts(search) {
+            var that = this
+            return IO3D.utils.services.call('Product.search', {
+              searchQuery: {
+                query: (search ? `${search}*` : undefined)
+              },
+              limit: 50
+            }).then(function(results) {
+              that.set('results', results)
+            })
+          }
+
+          selectProduct(elem) { 
+            this.selectedProduct = elem.model.item
+            Prism.highlightElement(this.$.snippet)
+            this.$.snippet.innerHTML = `&lt;a-scene&gt;\n  &lt;a-entity io3d-furniture="id:${elem.model.item.productResourceId}">&lt;/a-entity&gt;\n&lt;/a-scene&gt;`
+            Prism.highlightElement(this.$.snippet)
+          }
+        }
+
+        customElements.define(FurnitureApp.is, FurnitureApp)
+      </script>
+    </dom-module>
+    <furniture-app></furniture-app>
+    <script src="prism.min.js"></script>
+
+  </body>
+</html>
