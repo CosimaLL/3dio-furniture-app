@@ -65,32 +65,76 @@
         pointer-events: none;
       }
 
+      #library {
+        min-width: 100vw;
+        min-height: 100vh;
+      }
+
+      #info, #snippet {
+        width: 100%;
+        height: 50vh;
+      }
+
+      #results {
+        display: flex;
+        flex-flow: row wrap;
+      }
+
+      #search {
+        width: 98vw;
+        margin: 0.2em auto;
+        border: 1px solid gray;
+        padding: 0.1em;
+      }
+
+      #product-id {
+        font-family: Courier New, Courier, monospace;
+        background: #f5f2f0;
+        color: #905;
+      }
+
       @media(max-width: 600px) {
         aside {
           min-width: 100vw;
-          transform: translateX(100vw); /*translate3d(100vw, 0, 0); */
+          transform: translate3d(100vw, 0, 0);
         }
       }
     </style>
+
+    <link rel="stylesheet" href="prism.min.css">
+
+    <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+    <script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"></script>
+    <script src="https://cdn.rawgit.com/tizzle/aframe-orbit-controls-component/v0.1.12/dist/aframe-orbit-controls-component.min.js"></script>
   </head>
   <body>
     <div id="library">
       <p>
-        <label for="search">Search: <input id="search" placeholder="type a query, e.g. 'chair'" /> </label>
+        <input id="search" placeholder="type a query, e.g. 'chair'" />
       </p>
       <div id="results"></div>
     </div>
     <aside>
       <div id="info">
-        xxx
+        <a-scene embedded antialias>
+          <a-entity camera position="0 1.6 0" orbit-controls="target:#furniture; autoRotate: true"></a-entity>
+          <a-entity id="furniture" io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f" position="0 0 -3"></a-entity>
+        </a-scene>
       </div>
       <div id="snippet">
-        xxx
+        <p>Product ID: <span id="product-id"></span></p>
+        <pre><code class="language-markup">
+&lt;a-scene&gt;
+  &lt;a-entity 
+    io3d-furniture="id:[[productId]]"&gt; position="0 0 5"
+  &lt;/a-entity&gt;
+&lt;/a-scene&gt;
+        </code></pre>
       </div>
     </aside>
 
     <template>
-      <div class="product">
+      <div class="product" data-product-id="">
         <img>
         <div class="product-info">
           <p class="product-name"></p>
