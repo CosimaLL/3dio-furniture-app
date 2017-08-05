@@ -36,6 +36,10 @@ search.addEventListener('input', debounce(function searchFurniture() {
     limit: 50
   }).then(function (results) {
     resultsContainer.innerHTML = ''
+    if(results.length === 0) {
+      resultsContainer.textContent = 'Woah, no furniture found that matches your criteria'
+      return
+    }
     results.forEach((product) => {
       var item = document.importNode(tpl, true)
       item.querySelector('img').src = `https://storage.3d.io${product.preview}`
@@ -44,6 +48,9 @@ search.addEventListener('input', debounce(function searchFurniture() {
       item.children[0].dataset.productId = product.productResourceId
       resultsContainer.appendChild(item)
     })
+  }).catch(function (err) {
+    console.error('Error fetching furniture:', err)
+    searchFurniture()
   })
 }, 500))
 
