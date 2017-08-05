@@ -7,6 +7,7 @@
     <meta name="keywords" content="3d, aframe, webgl, webvr, archilogic, 3d.io, interior, 3d furniture">
     <meta name="description" content="The 3D.io furniture library provides access to a vast library of 3D furniture from Archilogic's library for usage with 3D.io and aframe">
 
+    <link rel="stylesheet" href="css/fira-sans.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/prism.min.css">
 
@@ -31,7 +32,10 @@
         </a-scene>
       </div>
       <div id="snippet">
+        <p id="product-name"></p>
         <p>Furniture ID: <span id="product-id"></span></p>
+        <br />
+        <p>To display this piece of furniture, use the following snippet with <a href="https://aframe.io">A-Frame</a>:</p>
         <pre><code class="language-markup">
 &lt;a-scene&gt;
   &lt;a-entity 
@@ -39,6 +43,18 @@
   &lt;/a-entity&gt;
 &lt;/a-scene&gt;
         </code></pre>
+        <form target="_blank" method="post" action="https://jsfiddle.net/api/post/library/pure/">
+          <textarea name="html">
+            <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+            <script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"></script>
+            <a-scene>
+              <a-entity io3d-furniture="id:[[productId]]"></a-entity>
+            </a-scene>
+          </textarea>     
+          <input type="hidden" name="title" value="3d.io furniture demo">
+          <input type="hidden" name="description" value="Displays 3d.io furniture in A-Frame">     
+          <button type="submit">Get the code</button>
+        </form>
       </div>
     </aside>
 
