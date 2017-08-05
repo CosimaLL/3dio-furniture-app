@@ -1,4 +1,4 @@
-language: python
+language: javascript
 script:
   - sudo pip install s3cmd
   - mkdir public
