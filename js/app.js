@@ -20,14 +20,15 @@ function debounce(func, wait, immediate) {
 var search = document.querySelector('input')
 var tpl = document.querySelector('template').content
 var resultsContainer = document.getElementById('results')
-var menu = document.querySelector('aside')
+var sidebar = document.querySelector('aside')
 var aframeEntity = document.querySelector('a-entity[io3d-furniture]').components['io3d-furniture']
 var snippet = document.querySelector('code')
 var idContainer = document.getElementById('product-id')
 
 // Event handlers
 
-search.addEventListener('input', debounce(function () {
+search.addEventListener('input', debounce(function searchFurniture() {
+  resultsContainer.textContent = 'Searching...'
   IO3D.utils.services.call('Product.search', {
     searchQuery: {
       query: `${search.value}*`
@@ -51,13 +52,21 @@ resultsContainer.addEventListener('click', function (evt) {
     return item.className == 'product'
   })
 
-  if(!productContainer) return
+  if(!productContainer) {
+    sidebar.classList.remove('menu-active')
+    return
+  }
+
   var productId = productContainer.dataset.productId
 
-  document.querySelector('aside').classList.add('menu-active')
+  sidebar.classList.add('menu-active')
   aframeEntity.data.id = productId
   aframeEntity.update()
   idContainer.textContent =productId
   snippet.textContent = `<a-scene>\n\t<a-entity io3d-furniture="id:${productId}"></a-entity>\n</a-scene>`
   Prism.highlightElement(snippet)
+})
+
+document.getElementById('back').addEventListener('click', function() {
+  sidebar.classList.remove('menu-active')
 })
