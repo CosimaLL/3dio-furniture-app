@@ -19,12 +19,12 @@
         background: white;
         box-sizing: border-box;
         box-shadow: rgba(128, 128, 128, 0.5) -4px 0px 8px;
-        position: absolute;
+        position: fixed;
         top: 0;
         right: 0;
         width: 33vw;
         min-height: 100vh;
-        transform: translate3d(34vw, 0, 0);
+        transform: translate3d(calc(33vw + 8px), 0, 0);
         transition: transform 1s ease-in-out;
         padding: 0.2em;
       }
@@ -39,6 +39,7 @@
         flex: 1;
         position: relative;
         padding-bottom: 2em;
+        background: #eee;
       }
 
       .product img {
@@ -84,9 +85,20 @@
         color: #905;
       }
 
+      #back, #back:visited {
+        color: #666;
+        display: none;
+        margin-bottom: 0.5em;
+      }
+
       @media(max-width: 600px) {
+
+        #back {
+          display: block;
+        }
+
         aside {
           min-width: 100vw;
-          transform: translate3d(100vw, 0, 0);
+          transform: translate3d(calc(100vw + 8px), 0, 0);
         }
       }
