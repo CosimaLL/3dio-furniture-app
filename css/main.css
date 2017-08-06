@@ -1,129 +1,131 @@
-      * {
-        vertical-align: baseline;
-        font-weight: inherit;
-        font-family: inherit;
-        font-style: inherit;
-        font-size: 100%;
-        padding: 0;
-        border: 0;
-        margin: 0;
-        border-collapse: collapse;
-      }
+* {
+    vertical-align: baseline;
+    font-weight: inherit;
+    font-family: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    border-collapse: collapse;
+}
 
-      body {
-        font-family: "Fira Sans", Helvetica, Arial, sans-serif;
-        overflow-x: hidden;
-      }
+body {
+    font-family: "Fira Sans", Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+}
 
-      aside {
-        background: white;
-        box-sizing: border-box;
-        box-shadow: rgba(128, 128, 128, 0.5) -4px 0px 8px;
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 33vw;
-        height: 100vh;
-        transform: translate3d(calc(33vw + 8px), 0, 0);
-        transition: transform 1s ease-in-out;
-        padding: 0.2em;
-        overflow-y: auto;
-      }
+aside {
+    background: white;
+    box-sizing: border-box;
+    box-shadow: rgba(128, 128, 128, 0.5) -4px 0px 8px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 33vw;
+    height: 100vh;
+    transform: translate3d(calc(33vw + 8px), 0, 0);
+    transition: transform 1s ease-in-out;
+    padding: 0.2em;
+    overflow-y: auto;
+}
 
-      textarea { display: none; }
+textarea {
+    display: none;
+}
 
-      button {
-        padding: 0.3em 0.6em;
-        border: 1px solid gray;
-        background: #ececec;
-      }
+button {
+    padding: 0.3em 0.6em;
+    border: 1px solid gray;
+    background: #ececec;
+}
 
-      .menu-active {
-        transform: translate3d(0, 0, 0);
-      }
+.menu-active {
+    transform: translate3d(0, 0, 0);
+}
 
-      .product {
-        margin: 1em;
-        min-width: 10em;
-        flex: 1;
-        position: relative;
-        padding-bottom: 2em;
-        background: #eee;
-      }
+.product {
+    margin: 1em;
+    min-width: 10em;
+    flex: 1;
+    position: relative;
+    padding-bottom: 2em;
+    background: #eee;
+}
 
-      .product img {
-        max-width: 100%;
-        pointer-events: none;
-      }
+.product img {
+    max-width: 100%;
+    pointer-events: none;
+}
 
-      .product-name {
-        font-weight: bold;
-      }
+.product-name {
+    font-weight: bold;
+}
 
-      .product-info {
-        position: absolute;
-        bottom: 0;
-        pointer-events: none;
-      }
+.product-info {
+    position: absolute;
+    bottom: 0;
+    pointer-events: none;
+}
 
-      #library {
+#library {
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+#info, #snippet {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 2em;
+}
+
+#info {
+    height: 30vh;
+}
+
+#snippet {
+    height: 55vh;
+}
+
+#results {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+#search {
+    width: 98vw;
+    margin: 0.2em auto;
+    border: 1px solid gray;
+    padding: 0.1em;
+    font-size: 1.6em;
+}
+
+#product-id {
+    font-family: Courier New, Courier, monospace;
+    background: #f5f2f0;
+    color: #905;
+}
+
+#product-name {
+    font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+#back, #back:visited {
+    color: #666;
+    display: none;
+    margin-bottom: 0.5em;
+}
+
+@media (max-width: 600px) {
+
+    #back {
+        display: block;
+    }
+
+    aside {
         min-width: 100vw;
-        min-height: 100vh;
-      }
-
-      #info, #snippet {
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 2em;
-      }
-
-      #info {
-        height: 30vh;
-      }
-
-      #snippet {
-        height: 55vh;
-      }
-
-      #results {
-        display: flex;
-        flex-flow: row wrap;
-      }
-
-      #search {
-        width: 98vw;
-        margin: 0.2em auto;
-        border: 1px solid gray;
-        padding: 0.1em;
-        font-size: 1.6em;
-      }
-
-      #product-id {
-        font-family: Courier New, Courier, monospace;
-        background: #f5f2f0;
-        color: #905;
-      }
-
-      #product-name {
-        font-weight: bold;
-        margin-top: 1em;
-        margin-bottom: 0.5em;
-      }
-
-      #back, #back:visited {
-        color: #666;
-        display: none;
-        margin-bottom: 0.5em;
-      }
-
-      @media(max-width: 600px) {
-
-        #back {
-          display: block;
-        }
-
-        aside {
-          min-width: 100vw;
-          transform: translate3d(calc(100vw + 8px), 0, 0);
-        }
-      }
+        transform: translate3d(calc(100vw + 8px), 0, 0);
+    }
+}
