@@ -1,0 +1,19 @@
+{
+  "name": "3dio-furniture-app",
+  "version": "1.0.0-beta.1",
+  "description": "",
+  "homepage": "https://3d.io",
+  "repository": "archilogic-com/3dio-furniture-app",
+  "license": "MIT",
+  "author": {
+    "name": "archilogic",
+    "email": "dev.rocks@archilogic.com",
+    "url": "https://archilogic.com"
+  },
+  "scripts": {
+    "dev": "lite-server"
+  },
+  "devDependencies": {
+    "lite-server": "^2.3.0"
+  }
+}

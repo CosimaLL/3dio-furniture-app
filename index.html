@@ -1,74 +1,96 @@
 <!doctype html>
 <html>
   <head>
-    <title>3D.io furniture library</title>
+    <title>3d.io Furniture for A-Frame</title>
     <meta name="charset" content="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="3d, aframe, webgl, webvr, archilogic, 3d.io, interior, 3d furniture">
-    <meta name="description" content="The 3D.io furniture library provides access to a vast library of 3D furniture from Archilogic's library for usage with 3D.io and aframe">
+    <meta name="description" content="3d.io Furniture for A-Frame">
 
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:200,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/prism.min.css">
 
     <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
-    <script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"></script>
     <script src="https://cdn.rawgit.com/tizzle/aframe-orbit-controls-component/v0.1.12/dist/aframe-orbit-controls-component.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
+
+    <script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"></script>
+    <script src="js/3dio-extensions.js"></script>
   </head>
   <body>
-    <div id="library">
-      <p>
-        <input id="search" placeholder="type a query, e.g. 'chair'" />
-      </p>
-      <div id="results"></div>
-    </div>
-    <aside>
-      <div id="info">
-        <a id="back" href="#library">Back to library</a>
-        <a-scene embedded antialias>
-          <a-sky color="#ececec"></a-sky>
-          <a-entity camera position="0 1.6 0" orbit-controls="target:#furniture; autoRotate: true"></a-entity>
-          <a-entity id="furniture" io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f" position="0 0 -3"></a-entity>
-        </a-scene>
-      </div>
-      <div id="snippet">
-        <p id="product-name"></p>
-        <p>Furniture ID: <span id="product-id"></span></p>
-        <br />
-        <p>To display this piece of furniture, use the following snippet with <a href="https://aframe.io">A-Frame</a>:</p>
-        <pre><code class="language-markup">
-&lt;a-scene&gt;
-  &lt;a-entity 
-    io3d-furniture="id:[[productId]]"&gt; position="0 0 5"
-  &lt;/a-entity&gt;
-&lt;/a-scene&gt;
-        </code></pre>
-        <form target="_blank" method="post" action="https://jsfiddle.net/api/post/library/pure/">
-          <textarea name="html">
-            <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
-            <script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"></script>
-            <a-scene>
-              <a-entity io3d-furniture="id:[[productId]]"></a-entity>
-            </a-scene>
-          </textarea>     
-          <input type="hidden" name="title" value="3d.io furniture demo">
-          <input type="hidden" name="description" value="Displays 3d.io furniture in A-Frame">     
-          <button type="submit">Get the code</button>
-        </form>
-      </div>
-    </aside>
 
-    <template>
-      <div class="product" data-product-id="">
-        <img>
-        <div class="product-info">
-          <p class="product-name"></p>
-          <p class="product-manufacturer"></p>
+  <div id="library">
+    <div id="search">
+      <input value="chair" placeholder="type a query, e.g. 'chair'" />
+    </div>
+    <div id="results"></div>
+  </div>
+
+  <template id="furniture-item-template">
+    <div class="furniture-item">
+      <div class="image">
+      <div class="overlay">
+        <div class="info">
+          <p class="name"></p>
+          <p class="manufacturer"></p>
         </div>
       </div>
-    </template>
+    </div>
+  </template>
 
-    <script src="js/prism.min.js"></script>
-    <script src="js/app.js"></script>
-  </body>
+  <div id="details">
+    <a-scene id="preview" embedded antialias>
+      <a-entity id="furniture"
+                io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f"
+                position="0 0 0"
+      ></a-entity>
+      <a-sky color="#ececec"></a-sky>
+      <a-entity geometry="primitive: circle; radius: 2"
+                material="color: #999;"
+                position="0 0 0"
+                rotation="-90 0 0"
+      ></a-entity>
+      <a-entity geometry="primitive: cylinder; openEnded: true; height: 0.2; radius: 2"
+                material="color: #333;"
+                position="0 -0.1 0"
+      ></a-entity>
+      <a-entity id="camera-target"
+                position="0 0.5 0"
+      ></a-entity>
+      <a-entity camera="fov: 55;"
+                position="1.5 0.8 0"
+                orbit-controls="target:#camera-target; autoRotate: true; enableZoom: false;"
+      ></a-entity>
+    </a-scene>
+    <p>Name: <span id="furniture-name"></span></p>
+    <p>Furniture ID: <span id="furniture-id">a2d91985-6d60-43ef-b660-0d6ed370bb6f</span></p>
+    <p>To display this piece of furniture, use the following snippet with <a href="https://aframe.io">A-Frame</a>:
+    <pre><code id="code-snippet" class="language-markup">&lt;a-scene&gt;
+  &lt;a-entity io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f" position="0 0 5"&gt;&lt;/a-entity&gt;
+&lt;/a-scene&gt;</code></pre>
+    </p>
+    <p>
+      <form target="_blank" method="post" action="https://jsfiddle.net/api/post/library/pure/">
+            <textarea id="jsfiddle-html" name="html" style="display:none;">
+              <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+              <script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"></script>
+              <script src="https://cdn.rawgit.com/tizzle/aframe-orbit-controls-component/v0.1.12/dist/aframe-orbit-controls-component.min.js"></script>
+              <a-scene>
+                <a-entity id="furniture" io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f" position="0 0 -3"></a-entity>
+                <a-sky color="#ececec"></a-sky>
+                <a-entity camera position="0 1.6 0" orbit-controls="target:#furniture; autoRotate: true"></a-entity>
+              </a-scene>
+            </textarea>
+        <input type="hidden" name="title" value="3d.io Furniture for A-Frame Demo">
+        <input type="hidden" name="description" value="Displays 3d.io furniture in A-Frame">
+        <button class="jsfiddle-button" type="submit">Open in jsfiddle</button>
+      </form>
+    </p>
+  </div>
+
+  <script src="js/app.js"></script>
+
+</body>
 </html>
