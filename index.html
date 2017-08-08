@@ -52,30 +52,34 @@
       <a id="back-button">&lt; back</a>
       <span style="float:right;">
         <a href="javascript:io3d.ui.devDashboard();">Get API Key</a> |
-        <!-- <a href="https://3d.io/docs/api/1/furniture-library.html" target="_blank">Docs</a> | -->
-        <a href="https://github.com/archilogic-com/3dio-furniture-app" target="_blank">Github</a>
+        <a href="https://github.com/archilogic-com/3dio-furniture-app" target="_blank">Stack Overflow</a> |
+        <a href="https://github.com/archilogic-com/3dio-furniture-app" target="_blank">Github</a> |
+        <a href="https://3d.io/docs/api/1/furniture.html" target="_blank">Docs</a>
       </span>
     </p>
     <p style="clear: right;">
-      <a-scene id="preview" embedded antialias="true">
-        <a-entity id="furniture"
-                  io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f"
-                  position="0 0 0"
-        ></a-entity>
-        <a-sky color="#ececec"></a-sky>
-        <a-entity geometry="primitive: circle; radius: 2"
-                  material="color: #999;"
-                  position="0 0 0"
-                  rotation="-90 0 0"
-        ></a-entity>
-        <a-entity id="camera-target"
-                  position="0 0.5 0"
-        ></a-entity>
-        <a-entity camera="fov: 55;"
-                  position="1.7 0.8 0"
-                  orbit-controls="target:#camera-target; autoRotate: true;"
-        ></a-entity>
-      </a-scene>
+      <div id="preview">
+        <a-scene embedded antialias="true">
+          <a-entity id="furniture"
+                    io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f"
+                    position="0 0 0"
+          ></a-entity>
+          <a-sky color="#ececec"></a-sky>
+          <a-entity geometry="primitive: circle; radius: 2"
+                    material="color: #999;"
+                    position="0 0 0"
+                    rotation="-90 0 0"
+          ></a-entity>
+          <a-entity id="camera-target"
+                    position="0 0.5 0"
+          ></a-entity>
+          <a-entity camera="fov: 55;"
+                    position="1.7 0.8 0"
+                    orbit-controls="target:#camera-target; autoRotate: true;"
+          ></a-entity>
+        </a-scene>
+        <div id="preview-loading-overlay">LOADING ...</div>
+      </div>
     </p>
     <p style="display: flex; align-items: center;">
       <span style="flex: 0; white-space: nowrap; margin-right:6px;">Furniture ID: </span>

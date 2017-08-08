@@ -8,6 +8,7 @@ var $intro = $('#intro')
 var $details = $('#details')
 var $detailsBackButton = $('#back-button')
 var $preview = $('a-entity[io3d-furniture]')
+var $previewLoadingOverlay = $('#preview-loading-overlay')
 var $furnitureId = $('#furniture-id')
 var $codeSnippet = $('#code-snippet')
 var $exampleTitle = $('#example-title')
@@ -42,24 +43,34 @@ function updateSearchResultsView (results) {
     $item.find('.name').text(item.name)
     $item.find('.manufacturer').text(item.manufacturer)
     $item.on('click', function() {
-      updateDetailsView(item)
+      updateDetailsView(item.id)
     })
   })
 }
 
-function updateDetailsView (item) {
+function updateDetailsView (furnitureId) {
+  if (!furnitureId) return
+  $previewLoadingOverlay.show()
   $details.show()
   $details.css({ 'z-index': 30 })
   // update furniture ID in a-frame scene
-  $preview.attr('io3d-furniture', 'id:'+item.id)
+  $preview[0].removeEventListener('model-loaded', hideLoadingScreen)
+  $preview.attr('io3d-furniture', 'id:'+furnitureId)
   // update id in detail view
-  $furnitureId.val(item.id)
+  $furnitureId.val(furnitureId)
+  $preview[0].addEventListener('model-loaded', hideLoadingScreen)
   // update code snippet
-  $codeSnippet.html( $codeSnippet.html().replace(/id:([^"<]+)/gmi, 'id:'+item.id) )
+  $codeSnippet.html( $codeSnippet.html().replace(/id:([^"<]+)/gmi, 'id:'+furnitureId) )
   // update example html code for jsfiddle
-  $exampleHtml.html( $exampleHtml.html().replace(/id:([^"<]+)/gmi, 'id:'+item.id) )
+  $exampleHtml.html( $exampleHtml.html().replace(/id:([^"<]+)/gmi, 'id:'+furnitureId) )
   // update data for codepen
   $codepenData.val( JSON.stringify({ title: $exampleTitle.val(), html: $exampleHtml.val() }))
+  // updates hashtag
+  window.location.hash = 'furnitureId='+furnitureId
+}
+
+function hideLoadingScreen () {
+  $previewLoadingOverlay.hide()
 }
 
 // Event handlers
@@ -74,6 +85,7 @@ $furnitureId.on('click', function () {
 
 // initialize
 
+updateDetailsView(getFurnitureIdFromUrl())
 search()
 
 // Helpers
@@ -92,3 +104,9 @@ function debounce(wait, immediate, func) {
     if (callNow) func.apply(context, args);
   };
 };
+
+function getFurnitureIdFromUrl() {
+  var hash = window.location.hash
+  // furnitureId=
+  return hash && hash !== '' && hash !== '#' ? hash.substring(13) : undefined
+}
