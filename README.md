@@ -1,2 +1,5 @@
 # 3dio-furniture-app
-Demonstrative application allowing to find furniture, showing code to use it in A-Frame and demoes 3dio-js
+
+https://furniture.3d.io
+
+Browse thousands of "low poly / high quali" 3d models of real furniture pieces and use them in your own A-Frame apps.
