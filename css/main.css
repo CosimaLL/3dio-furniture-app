@@ -28,6 +28,8 @@ body {
     top: 0; left: 0; bottom: 0;
     width: 60%;
     overflow: auto;
+    z-index: 5;
+    background: white;
 }
 
 #library #search  {
@@ -35,13 +37,13 @@ body {
     top: 0; left: 0;
     width: 100%;
     height: 4.5em;
-    padding: 0.6em 0.6em 0.6em 0.6em;
+    padding: 0.6em 1em 1em 1em;
     z-index: 10;
     box-shadow: 0 0 20px 10px rgba(255,255,255,1);
 }
 
 #library #search input {
-    width: 98%;
+    width: 100%;
     height: 100%;
     line-height: 100%;
     border-bottom: 3px solid black;
@@ -96,10 +98,6 @@ body {
     width: 100%;
     height: 100%;
     border: 3px solid black;
-    /*
-    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.9) 70%);
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0.9) 70%);
-    */
     opacity: 0;
     transition: opacity 200ms ease-out;
     text-align: center;
@@ -109,7 +107,16 @@ body {
     opacity: 1;
 }
 
-#library .furniture-item .info {
+#library .furniture-item .info-top {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+    padding: 0.3em 0 0.3em 0;
+    color: white;
+}
+
+#library .furniture-item .info-bottom {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -135,12 +142,41 @@ body {
 
 /* CONTENT ON THE RIGHT SIDE */
 
-#details {
+#intro {
     position: absolute;
     top: 0; right: 0; bottom: 0;
     width: 40%;
     padding: 1em;
     overflow: auto;
+    background: white;
+    z-index: 0;
+}
+
+#details {
+    display: none;
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 40%;
+    padding: 1em;
+    overflow: auto;
+    background: white;
+    z-index: 20;
+}
+
+#details #close-button {
+    display: none;
+    position: absolute;
+    top: 1em; right: 1em;
+    width: 3em;
+    height: 3em;
+    line-height: 3em;
+    font-weight: bold;
+    color: black;
+    background: white;
+    border: 3px solid black;
+    text-align: center;
+    cursor: pointer;
+    z-index: 20;
 }
 
 #details p {
@@ -152,7 +188,7 @@ body {
     height: 300px;
 }
 
-#details .jsfiddle-button {
+#details #jsfiddle-button {
     padding: 0.3em 0.6em;
     border: 1px solid gray;
     background: #eee;
@@ -164,9 +200,24 @@ body {
     padding-left: 2.3em;
 }
 
+#details #codepen-button {
+    padding: 0.3em 0.6em;
+    border: 1px solid gray;
+    background: #eee;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;utf8,<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve"><title>icon-android</title><path d="M125.9,44.2c0-0.2-0.1-0.3-0.1-0.4c0-0.1-0.1-0.2-0.1-0.3c0-0.1-0.1-0.3-0.1-0.4c0-0.1-0.1-0.2-0.1-0.3 c-0.1-0.1-0.1-0.2-0.2-0.4c0-0.1-0.1-0.2-0.2-0.2c-0.1-0.2-0.3-0.4-0.4-0.6c-0.1-0.1-0.2-0.2-0.3-0.3c-0.1-0.1-0.1-0.1-0.2-0.2 c-0.1-0.1-0.2-0.2-0.3-0.3c-0.1-0.1-0.2-0.1-0.2-0.2c0,0-0.1,0-0.1-0.1L67,2.9c-1.8-1.2-4.1-1.2-5.9,0L4.4,40.7c0,0-0.1,0-0.1,0.1 c-0.1,0.1-0.2,0.1-0.2,0.2C4,41,3.9,41.1,3.8,41.2c-0.1,0.1-0.1,0.1-0.2,0.2c-0.1,0.1-0.2,0.2-0.3,0.3c-0.1,0.1-0.1,0.2-0.2,0.2 C3,42,3,42.1,2.9,42.2c-0.1,0.1-0.1,0.2-0.2,0.2c-0.1,0.1-0.1,0.2-0.2,0.4c0,0.1-0.1,0.2-0.1,0.3c-0.1,0.1-0.1,0.3-0.1,0.4 c0,0.1-0.1,0.2-0.1,0.3c0,0.1-0.1,0.3-0.1,0.4c0,0.1,0,0.2,0,0.2c0,0.2,0,0.5,0,0.7v37.8c0,0.2,0,0.5,0,0.7c0,0.1,0,0.2,0.1,0.2 c0,0.2,0,0.3,0.1,0.5c0,0.1,0,0.2,0.1,0.3c0,0.1,0.1,0.3,0.1,0.4c0,0.1,0.1,0.2,0.1,0.3c0.1,0.1,0.1,0.2,0.2,0.4 c0,0.1,0.1,0.2,0.2,0.2C3,85.9,3,86,3.1,86.1c0.1,0.1,0.1,0.2,0.2,0.2c0.1,0.1,0.2,0.2,0.3,0.3c0.1,0.1,0.1,0.2,0.2,0.2 C3.9,86.9,4,87,4.1,87c0.1,0.1,0.2,0.1,0.2,0.2c0,0,0.1,0,0.1,0.1L61,125.1c0.9,0.6,1.9,0.9,3,0.9c1.1,0,2.1-0.3,3-0.9l56.6-37.8 c0,0,0.1,0,0.1-0.1c0.1-0.1,0.2-0.1,0.2-0.2c0.1-0.1,0.2-0.2,0.3-0.3c0.1-0.1,0.1-0.1,0.2-0.2c0.2-0.2,0.3-0.3,0.4-0.5 c0.1-0.1,0.2-0.2,0.2-0.3c0.1-0.1,0.1-0.2,0.2-0.2c0.1-0.1,0.1-0.2,0.2-0.4c0-0.1,0.1-0.2,0.1-0.3c0.1-0.1,0.1-0.3,0.1-0.4 c0-0.1,0.1-0.2,0.1-0.3c0-0.1,0.1-0.3,0.1-0.4c0-0.1,0-0.2,0-0.2c0-0.2,0-0.5,0-0.7V45.1c0-0.2,0-0.5,0-0.7 C125.9,44.3,125.9,44.3,125.9,44.2L125.9,44.2L125.9,44.2z M64,76.6L45.2,64L64,51.4L82.8,64L64,76.6z M58.7,42.2L35.6,57.6 L16.9,45.1l41.7-27.8L58.7,42.2L58.7,42.2z M26,64l-13.3,8.9V55.1L26,64z M35.6,70.4l23.1,15.4v24.8L16.9,82.9L35.6,70.4L35.6,70.4 L35.6,70.4z M69.3,85.8l23.1-15.4l18.6,12.5l-41.7,27.8V85.8L69.3,85.8z M102,64l13.3-8.9v17.8L102,64L102,64L102,64z M92.4,57.6 L69.3,42.2V17.3l41.7,27.8L92.4,57.6L92.4,57.6z"/></svg>');
+    background-repeat: no-repeat;
+    background-size: auto 90%;
+    background-position: 0.3em center;
+    padding-left: 2.3em;
+}
+
 /* mobile */
 @media (max-width: 800px) {
     #details {
         width: 100%;
+    }
+    #details #close-button {
+        display: block;
     }
 }

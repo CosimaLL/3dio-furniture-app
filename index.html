@@ -32,15 +32,22 @@
     <div class="furniture-item">
       <div class="image">
       <div class="overlay">
-        <div class="info">
+        <div class="info-top">
           <p class="name"></p>
+        </div>
+        <div class="info-bottom">
           <p class="manufacturer"></p>
         </div>
       </div>
     </div>
   </template>
 
+  <div id="intro">
+    Please choose some furniture on the right side.
+  </div>
+
   <div id="details">
+    <div id="close-button">x</div>
     <a-scene id="preview" embedded antialias>
       <a-entity id="furniture"
                 io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f"
@@ -60,7 +67,7 @@
                 position="0 0.5 0"
       ></a-entity>
       <a-entity camera="fov: 55;"
-                position="1.5 0.8 0"
+                position="1.7 0.8 0"
                 orbit-controls="target:#camera-target; autoRotate: true; enableZoom: false;"
       ></a-entity>
     </a-scene>
@@ -68,24 +75,28 @@
     <p>Furniture ID: <span id="furniture-id">a2d91985-6d60-43ef-b660-0d6ed370bb6f</span></p>
     <p>To display this piece of furniture, use the following snippet with <a href="https://aframe.io">A-Frame</a>:
     <pre><code id="code-snippet" class="language-markup">&lt;a-scene&gt;
-  &lt;a-entity io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f" position="0 0 5"&gt;&lt;/a-entity&gt;
+  &lt;a-entity io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f" position="0 0 0"&gt;&lt;/a-entity&gt;
 &lt;/a-scene&gt;</code></pre>
     </p>
     <p>
-      <form target="_blank" method="post" action="https://jsfiddle.net/api/post/library/pure/">
-            <textarea id="jsfiddle-html" name="html" style="display:none;">
-              <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
-              <script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"></script>
-              <script src="https://cdn.rawgit.com/tizzle/aframe-orbit-controls-component/v0.1.12/dist/aframe-orbit-controls-component.min.js"></script>
-              <a-scene>
-                <a-entity id="furniture" io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f" position="0 0 -3"></a-entity>
-                <a-sky color="#ececec"></a-sky>
-                <a-entity camera position="0 1.6 0" orbit-controls="target:#furniture; autoRotate: true"></a-entity>
-              </a-scene>
-            </textarea>
-        <input type="hidden" name="title" value="3d.io Furniture for A-Frame Demo">
+      <form target="_blank" method="post" action="https://jsfiddle.net/api/post/library/pure/" style="display:inline;">
+        <textarea id="example-html" name="html" style="display:none;">
+<script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
+<script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"></script>
+<script src="https://cdn.rawgit.com/tizzle/aframe-orbit-controls-component/v0.1.12/dist/aframe-orbit-controls-component.min.js"></script>
+<a-scene>
+  <a-entity id="furniture" io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f" position="0 0 -3"></a-entity>
+  <a-sky color="#ececec"></a-sky>
+  <a-entity camera position="0 1.6 0" orbit-controls="target:#furniture; autoRotate: true"></a-entity>
+</a-scene>
+        </textarea>
+        <input id="example-title" type="hidden" name="title" value="3d.io Furniture for A-Frame Demo">
         <input type="hidden" name="description" value="Displays 3d.io furniture in A-Frame">
-        <button class="jsfiddle-button" type="submit">Open in jsfiddle</button>
+        <button id="jsfiddle-button" type="submit">Open in jsfiddle</button>
+      </form>
+      <form action="https://codepen.io/pen/define" method="POST" target="_blank" style="display:inline;">
+        <input id="codepen-data" name="data" type="hidden" value="wwww">
+        <button id="codepen-button" type="submit">Open in codepen</button>
       </form>
     </p>
   </div>

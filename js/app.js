@@ -4,12 +4,15 @@ var $search = $('#search input')
 var $results = $('#results')
 var $furnitureItemTemplate = $('#furniture-item-template')
 
-var $preview = $('a-entity[io3d-furniture]')//[0].components['io3d-furniture']
+var $details = $('#details')
+var $detailsCloseButton = $('#close-button')
+var $preview = $('a-entity[io3d-furniture]')
 var $furnitureId = $('#furniture-id')
 var $furnitureName = $('#furniture-name')
 var $codeSnippet = $('#code-snippet')
-var $jsfiddleHtml = $('#jsfiddle-html')
-
+var $exampleTitle = $('#example-title')
+var $exampleHtml = $('#example-html')
+var $codepenData = $('#codepen-data')
 
 function search () {
   // some user feedback
@@ -45,6 +48,7 @@ function updateSearchResultsView (results) {
 }
 
 function updateDetailsView (item) {
+  $details.show()
   // update 3d preview
   $preview.attr('io3d-furniture', 'id:'+item.id)
   $furnitureId.text(item.id)
@@ -52,51 +56,21 @@ function updateDetailsView (item) {
   // update code snippet
   $codeSnippet.html( $codeSnippet.html().replace(/id:([^"<]+)/gmi, 'id:'+item.id) )
   // update example html code for jsfiddle
-  $jsfiddleHtml.html( $jsfiddleHtml.html().replace(/id:([^"<]+)/gmi, 'id:'+item.id) )
+  $exampleHtml.html( $exampleHtml.html().replace(/id:([^"<]+)/gmi, 'id:'+item.id) )
+  // update data for codepen
+  $codepenData.val( JSON.stringify({ title: $exampleTitle.val(), html: $exampleHtml.val() }))
 }
-
-
 
 // Event handlers
 
 $search.on('input', debounce(1000, false, search))
+$detailsCloseButton.on('click', function(){
+  $details.hide()
+})
+
+// initialize
 
 search()
-
-
-//resultsContainer.addEventListener('click', function (evt) {
-//  var productContainer = Array.from(evt.path).find(function (item) {
-//    return item.className == 'product'
-//  })
-//
-//  if(!productContainer) {
-//    sidebar.classList.remove('menu-active')
-//    return
-//  }
-//
-//  var productId = productContainer.dataset.productId,
-//      productName = productContainer.dataset.productName
-//
-//  idContainer.textContent = productId
-//  nameContainer.textContent = productName
-//
-//  aframeEntity.data.id = productId
-//  aframeEntity.update()
-//
-//  snippet.textContent = `<a-scene>\n\t<a-entity io3d-furniture="id:${productId}"></a-entity>\n</a-scene>`
-//  Prism.highlightElement(snippet)
-//
-//  $exampleSnippet.val( $exampleSnippet.val().replace('[[productId]]', productId) )
-//  fiddleTitle.value = `3d.io "${productName} in A-Frame"`
-//  fiddleDesc.value = `Displays the 3d.io furniture piece "${productName}" in an A-Frame scene`
-//
-//  sidebar.classList.add('menu-active')
-//})
-//
-//document.getElementById('back').addEventListener('click', function() {
-//  sidebar.classList.remove('menu-active')
-//})
-
 
 // Helpers
 
