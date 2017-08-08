@@ -4,11 +4,11 @@ var $search = $('#search input')
 var $results = $('#results')
 var $furnitureItemTemplate = $('#furniture-item-template')
 
+var $intro = $('#intro')
 var $details = $('#details')
-var $detailsCloseButton = $('#close-button')
+var $detailsBackButton = $('#back-button')
 var $preview = $('a-entity[io3d-furniture]')
 var $furnitureId = $('#furniture-id')
-var $furnitureName = $('#furniture-name')
 var $codeSnippet = $('#code-snippet')
 var $exampleTitle = $('#example-title')
 var $exampleHtml = $('#example-html')
@@ -49,10 +49,11 @@ function updateSearchResultsView (results) {
 
 function updateDetailsView (item) {
   $details.show()
-  // update 3d preview
+  $details.css({ 'z-index': 30 })
+  // update furniture ID in a-frame scene
   $preview.attr('io3d-furniture', 'id:'+item.id)
-  $furnitureId.text(item.id)
-  $furnitureName.text(item.name)
+  // update id in detail view
+  $furnitureId.val(item.id)
   // update code snippet
   $codeSnippet.html( $codeSnippet.html().replace(/id:([^"<]+)/gmi, 'id:'+item.id) )
   // update example html code for jsfiddle
@@ -64,8 +65,11 @@ function updateDetailsView (item) {
 // Event handlers
 
 $search.on('input', debounce(1000, false, search))
-$detailsCloseButton.on('click', function(){
-  $details.hide()
+$detailsBackButton.on('click', function(){
+  $details.css({ 'z-index': 0 })
+})
+$furnitureId.on('click', function () {
+  $furnitureId.select()
 })
 
 // initialize

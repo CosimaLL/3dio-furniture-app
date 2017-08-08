@@ -43,43 +43,46 @@
   </template>
 
   <div id="intro">
-    Please choose some furniture on the right side.
+    <span style="font-size:52px;">&#9756;</span><br>
+    Please choose some furniture on the left side.
   </div>
 
   <div id="details">
-    <div id="close-button">x</div>
-    <a-scene id="preview" embedded antialias>
-      <a-entity id="furniture"
-                io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f"
-                position="0 0 0"
-      ></a-entity>
-      <a-sky color="#ececec"></a-sky>
-      <a-entity geometry="primitive: circle; radius: 2"
-                material="color: #999;"
-                position="0 0 0"
-                rotation="-90 0 0"
-      ></a-entity>
-      <a-entity geometry="primitive: cylinder; openEnded: true; height: 0.2; radius: 2"
-                material="color: #333;"
-                position="0 -0.1 0"
-      ></a-entity>
-      <a-entity id="camera-target"
-                position="0 0.5 0"
-      ></a-entity>
-      <a-entity camera="fov: 55;"
-                position="1.7 0.8 0"
-                orbit-controls="target:#camera-target; autoRotate: true; enableZoom: false;"
-      ></a-entity>
-    </a-scene>
-    <p>Name: <span id="furniture-name"></span></p>
-    <p>Furniture ID: <span id="furniture-id">a2d91985-6d60-43ef-b660-0d6ed370bb6f</span></p>
-    <p>To display this piece of furniture, use the following snippet with <a href="https://aframe.io">A-Frame</a>:
-    <pre><code id="code-snippet" class="language-markup">&lt;a-scene&gt;
-  &lt;a-entity io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f" position="0 0 0"&gt;&lt;/a-entity&gt;
-&lt;/a-scene&gt;</code></pre>
+    <p style="padding-bottom: 1em;">
+      <a id="back-button">&lt; back</a>
+      <span style="float:right;">
+        <a href="javascript:io3d.ui.devDashboard();">Get API Key</a> |
+        <a href="https://3d.io/docs/api/1/furniture-library.html" target="_blank">Docs</a> |
+        <a href="https://github.com/archilogic-com/3dio-furniture-app" target="_blank">Github</a>
+      </span>
+    </p>
+    <p style="clear: right;">
+      <a-scene id="preview" embedded antialias="true">
+        <a-entity id="furniture"
+                  io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f"
+                  position="0 0 0"
+        ></a-entity>
+        <a-sky color="#ececec"></a-sky>
+        <a-entity geometry="primitive: circle; radius: 2"
+                  material="color: #999;"
+                  position="0 0 0"
+                  rotation="-90 0 0"
+        ></a-entity>
+        <a-entity id="camera-target"
+                  position="0 0.5 0"
+        ></a-entity>
+        <a-entity camera="fov: 55;"
+                  position="1.7 0.8 0"
+                  orbit-controls="target:#camera-target; autoRotate: true; enableZoom: false;"
+        ></a-entity>
+      </a-scene>
+    </p>
+    <p style="display: flex; align-items: center;">
+      <span style="flex: 0; white-space: nowrap; margin-right:6px;">Furniture ID: </span>
+      <input style="flex: 1;" id="furniture-id" type="text" value="a2d91985-6d60-43ef-b660-0d6ed370bb6f">
     </p>
     <p>
-      <form target="_blank" method="post" action="https://jsfiddle.net/api/post/library/pure/" style="display:inline;">
+    <form target="_blank" method="post" action="https://jsfiddle.net/api/post/library/pure/" style="display:inline;">
         <textarea id="example-html" name="html" style="display:none;">
 <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
 <script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"></script>
@@ -90,14 +93,27 @@
   <a-entity camera position="0 1.6 0" orbit-controls="target:#furniture; autoRotate: true"></a-entity>
 </a-scene>
         </textarea>
-        <input id="example-title" type="hidden" name="title" value="3d.io Furniture for A-Frame Demo">
-        <input type="hidden" name="description" value="Displays 3d.io furniture in A-Frame">
-        <button id="jsfiddle-button" type="submit">Open in jsfiddle</button>
-      </form>
-      <form action="https://codepen.io/pen/define" method="POST" target="_blank" style="display:inline;">
-        <input id="codepen-data" name="data" type="hidden" value="wwww">
-        <button id="codepen-button" type="submit">Open in codepen</button>
-      </form>
+      <input id="example-title" type="hidden" name="title" value="3d.io Furniture for A-Frame Demo">
+      <input type="hidden" name="description" value="Displays 3d.io furniture in A-Frame">
+      <button id="jsfiddle-button" type="submit">Open in jsfiddle</button>
+    </form>
+    <form action="https://codepen.io/pen/define" method="POST" target="_blank" style="display:inline;">
+      <input id="codepen-data" name="data" type="hidden" value="wwww">
+      <button id="codepen-button" type="submit">Open in codepen</button>
+    </form>
+    </p>
+    <p>To display this piece of furniture, use the following snippet with <a href="https://aframe.io">A-Frame</a>:
+    <pre><code id="code-snippet" class="language-markup">&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src="https://aframe.io/releases/0.6.1/aframe.min.js"&gt;&lt;/script&gt;
+    &lt;script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js?publishableKey=[[YOUR-PUBLISHABLE-KEY]]"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;a-scene antialias="true"&gt;
+      &lt;a-entity io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f" position="0 0 0"&gt;&lt;/a-entity&gt;
+    &lt;/a-scene&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
     </p>
   </div>
 
