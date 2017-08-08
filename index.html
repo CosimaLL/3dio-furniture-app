@@ -12,12 +12,8 @@
     <link rel="stylesheet" href="css/main.css">
 
     <script src="https://aframe.io/releases/0.6.1/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/tizzle/aframe-orbit-controls-component/v0.1.12/dist/aframe-orbit-controls-component.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
-
     <script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"></script>
-    <script src="js/3dio-extensions.js"></script>
+    <script src="https://cdn.rawgit.com/tizzle/aframe-orbit-controls-component/v0.1.12/dist/aframe-orbit-controls-component.min.js"></script>
   </head>
   <body>
 
@@ -28,8 +24,8 @@
     <div id="results"></div>
   </div>
 
-  <template id="furniture-item-template">
-    <div class="furniture-item">
+  <template>
+    <div class="furniture-item" data-id="">
       <div class="image">
       <div class="overlay">
         <div class="info-top">
@@ -43,7 +39,7 @@
   </template>
 
   <div id="intro">
-    <span style="font-size:52px;">&#9756;</span><br>
+    <span style="font-size:3.3em;">&#9756;</span><br>
     click some
   </div>
 
@@ -121,6 +117,9 @@
     </p>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
+
+  <script src="js/3dio-extensions.js"></script>
   <script src="js/app.js"></script>
 
 </body>

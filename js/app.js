@@ -1,86 +1,93 @@
 // Element references
 
-var $search = $('#search input')
-var $results = $('#results')
-var $furnitureItemTemplate = $('#furniture-item-template')
+var searchBar = document.querySelector('#search input')
+var resultsContainer = document.querySelector('#results')
+var furnitureItemTemplate = document.querySelector('template')
 
-var $intro = $('#intro')
-var $details = $('#details')
-var $detailsBackButton = $('#back-button')
-var $preview = $('a-entity[io3d-furniture]')
-var $previewLoadingOverlay = $('#preview-loading-overlay')
-var $furnitureId = $('#furniture-id')
-var $codeSnippet = $('#code-snippet')
-var $exampleTitle = $('#example-title')
-var $exampleHtml = $('#example-html')
-var $codepenData = $('#codepen-data')
+var intro = document.querySelector('#intro')
+var details = document.querySelector('#details')
+var detailsBackButton = document.querySelector('#back-button')
+var preview = document.querySelector('a-entity[io3d-furniture]')
+var previewLoadingOverlay = document.querySelector('#preview-loading-overlay')
+var furnitureId = document.querySelector('#furniture-id')
+var codeSnippet = document.querySelector('#code-snippet')
+var exampleTitle = document.querySelector('#example-title')
+var exampleHtml = document.querySelector('#example-html')
+var codepenData = document.querySelector('#codepen-data')
 
 function search () {
   // some user feedback
-  $results.text('Searching...')
+  results.textContent = 'Searching...'
   // start search ...
   io3d.furniture
-    .search($search.val())
+    .search(searchBar.value)
     // ... and update view when ready
     .then(updateSearchResultsView)
     // ... or catch errors
     .catch(function(error){
       console.error(error)
-      $results.html('Sorry, something went wrong:<br><br>'+JSON.stringify(error, null, 2))
+      results.textContent = 'Sorry, something went wrong:\n\n' + JSON.stringify(error, null, 2)
     })
 }
 
 function updateSearchResultsView (results) {
   // 0 results: show message & exit
-  if (!results.length) return $results.text('Woah, no furniture found that matches your criteria')
+  if (!results.length) return resultsContainer.textContent = 'Woah, no furniture found that matches your criteria'
   // reset preview
-  $results.empty()
+  resultsContainer.textContent = ''
   // for every item in result...
-  results.forEach(function (item) {
+  results.forEach(function (furniture) {
     // create an item element group
-    var $item = $furnitureItemTemplate.contents().clone().appendTo($results)
-    $item.find('.image').css({ 'background-image': 'url("https://storage.3d.io'+item.indexImage+'")' })
-    $item.find('.name').text(item.name)
-    $item.find('.manufacturer').text(item.manufacturer)
-    $item.on('click', function() {
-      updateDetailsView(item.id)
-    })
+    var item = document.importNode(furnitureItemTemplate.content, true)
+    item.querySelector('.image').style.backgroundImage = `url(https://storage.3d.io${furniture.indexImage})`
+    item.querySelector('.name').textContent = furniture.name
+    item.querySelector('.manufacturer').textContent = furniture.manufacturer
+    item.children[0].dataset.id = furniture.id
+    resultsContainer.appendChild(item)
   })
 }
 
 function updateDetailsView (furnitureId) {
   if (!furnitureId) return
-  $previewLoadingOverlay.show()
-  $details.show()
-  $details.css({ 'z-index': 30 })
+  previewLoadingOverlay.style.display = 'block'
+
+  details.style.display = 'block'
+  details.style.zIndex = 30 
+
   // update furniture ID in a-frame scene
-  $preview[0].removeEventListener('model-loaded', hideLoadingScreen)
-  $preview.attr('io3d-furniture', 'id:'+furnitureId)
+  preview.removeEventListener('model-loaded', hideLoadingScreen)
+  preview.setAttribute('io3d-furniture', 'id:'+furnitureId)
   // update id in detail view
-  $furnitureId.val(furnitureId)
-  $preview[0].addEventListener('model-loaded', hideLoadingScreen)
+  furnitureId.value = furnitureId
+  preview.addEventListener('model-loaded', hideLoadingScreen)
   // update code snippet
-  $codeSnippet.html( $codeSnippet.html().replace(/id:([^"<]+)/gmi, 'id:'+furnitureId) )
+  codeSnippet.innerHTML = codeSnippet.innerHTML.replace(/id:([^"<]+)/gmi, 'id:'+furnitureId)
   // update example html code for jsfiddle
-  $exampleHtml.html( $exampleHtml.html().replace(/id:([^"<]+)/gmi, 'id:'+furnitureId) )
+  exampleHtml.innerHTML =  exampleHtml.innerHTML.replace(/id:([^"<]+)/gmi, 'id:'+furnitureId)
   // update data for codepen
-  $codepenData.val( JSON.stringify({ title: $exampleTitle.val(), html: $exampleHtml.val() }))
+  codepenData.value = JSON.stringify({ title: exampleTitle.value, html: exampleHtml.value })
   // updates hashtag
   window.location.hash = 'furnitureId='+furnitureId
 }
 
 function hideLoadingScreen () {
-  $previewLoadingOverlay.hide()
+  previewLoadingOverlay.style.display = 'none'
 }
 
 // Event handlers
 
-$search.on('input', debounce(1000, false, search))
-$detailsBackButton.on('click', function(){
-  $details.css({ 'z-index': 0 })
+searchBar.addEventListener('input', debounce(1000, false, search))
+detailsBackButton.addEventListener('click', function () {
+  details.style.zIndex = 0
 })
-$furnitureId.on('click', function () {
-  $furnitureId.select()
+furnitureId.addEventListener('click', furnitureId.select)
+results.addEventListener('click', function (evt) {
+  evt.path.forEach(function (elem) {
+    if(elem.dataset && elem.dataset.id) {
+      console.log('boom!', elem.dataset.id)
+      updateDetailsView(elem.dataset.id)
+    }
+  })
 })
 
 // initialize
@@ -108,5 +115,5 @@ function debounce(wait, immediate, func) {
 function getFurnitureIdFromUrl() {
   var hash = window.location.hash
   // furnitureId=
-  return hash && hash !== '' && hash !== '#' ? hash.substring(13) : undefined
+  return (hash && hash !== '' && hash !== '#') ? hash.substring(13) : undefined
 }
