@@ -32,7 +32,7 @@ io3d.furniture.search = function searchFurniture (query, options) {
           url: rawItem.link,
           year: rawItem.year,
           // grouping
-          collectionIds: rawItem.tags,
+          collectionIds: rawItem.productCollectionResourceIds,
           tags: rawItem.tags,
           styles: rawItem.styles,
           categories: rawItem.categories,
