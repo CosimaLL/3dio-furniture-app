@@ -93,6 +93,13 @@ a {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center center;
+    object-fit: contain;
+    z-index: 10;
+    opacity: 1;
+}
+
+#library .furniture-item .overlay:hover .image {
+    opacity: 0.7;
 }
 
 #library .furniture-item .overlay {
@@ -101,14 +108,23 @@ a {
     bottom: 0;
     width: 100%;
     height: 100%;
-    border: 3px solid black;
-    opacity: 0;
-    transition: opacity 200ms ease-out;
+    transition: border 200ms ease-out;
     text-align: center;
     background: rgba(255,255,255,0.7);
 }
 
 #library .furniture-item .overlay:hover {
+    border: 3px solid black;
+}
+
+#library .furniture-item .overlay .info-top, #library .furniture-item .overlay .info-bottom {
+    background: rgba(255,255,255,0.7);
+    z-index: 11;
+    opacity: 0;
+    transition: opacity 200ms ease-out;
+}
+
+#library .furniture-item .overlay:hover .info-top, #library .furniture-item .overlay:hover .info-bottom {
     opacity: 1;
 }
 

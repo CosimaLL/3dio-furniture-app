@@ -39,7 +39,7 @@ function updateSearchResultsView (results) {
   results.forEach(function (furniture) {
     // create an item element group
     var item = document.importNode(furnitureItemTemplate.content, true)
-    item.querySelector('.image').style.backgroundImage = `url(https://storage.3d.io${furniture.indexImage})`
+    item.querySelector('.image').src = `https://storage.3d.io${furniture.indexImage}`
     item.querySelector('.name').textContent = furniture.name
     item.querySelector('.manufacturer').textContent = furniture.manufacturer
     item.children[0].dataset.id = furniture.id
