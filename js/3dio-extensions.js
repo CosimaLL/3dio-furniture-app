@@ -6,15 +6,15 @@ io3d.furniture.search = function searchFurniture (query, options) {
   // API
   options = options || {}
   var limit = options.limit || 50
-  var offset = options.offset || 0
+  //var offset = options.offset || 0
   // internals
   var apiErrorCount = 0
   // call API
   function callApi () {
     return io3d.utils.services.call('Product.search', {
       searchQuery: {query: 'isPublished:true ' + query},
-      limit: limit,
-      offset: offset
+      limit: limit
+      //offset: offset
     }).then(function onSuccess (rawResults) {
       apiErrorCount = 0
       // remap properties
