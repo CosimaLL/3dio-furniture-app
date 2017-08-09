@@ -39,7 +39,7 @@ function updateSearchResultsView (results) {
   results.forEach(function (furniture) {
     // create an item element group
     var item = document.importNode(furnitureItemTemplate.content, true)
-    item.querySelector('.image').src = `https://storage.3d.io${furniture.indexImage}`
+    item.querySelector('.image').src = furniture.indexImage
     item.querySelector('.name').textContent = furniture.name
     item.querySelector('.manufacturer').textContent = furniture.manufacturer
     item.children[0].dataset.id = furniture.id
@@ -84,7 +84,6 @@ furnitureId.addEventListener('click', furnitureId.select)
 results.addEventListener('click', function (evt) {
   evt.path.forEach(function (elem) {
     if(elem.dataset && elem.dataset.id) {
-      console.log('boom!', elem.dataset.id)
       updateDetailsView(elem.dataset.id)
     }
   })
