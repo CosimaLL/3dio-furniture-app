@@ -9,7 +9,7 @@ var details = document.querySelector('#details')
 var detailsBackButton = document.querySelector('#back-button')
 var preview = document.querySelector('a-entity[io3d-furniture]')
 var previewLoadingOverlay = document.querySelector('#preview-loading-overlay')
-var furnitureId = document.querySelector('#furniture-id')
+var furnitureIdField = document.querySelector('#furniture-id')
 var codeSnippet = document.querySelector('#code-snippet')
 var exampleTitle = document.querySelector('#example-title')
 var exampleHtml = document.querySelector('#example-html')
@@ -52,13 +52,13 @@ function updateDetailsView (furnitureId) {
   previewLoadingOverlay.style.display = 'block'
 
   details.style.display = 'block'
-  details.style.zIndex = 30 
+  details.style.zIndex = 30
 
   // update furniture ID in a-frame scene
   preview.removeEventListener('model-loaded', hideLoadingScreen)
   preview.setAttribute('io3d-furniture', 'id:'+furnitureId)
   // update id in detail view
-  furnitureId.value = furnitureId
+  furnitureIdField.value = furnitureId
   preview.addEventListener('model-loaded', hideLoadingScreen)
   // update code snippet
   codeSnippet.innerHTML = codeSnippet.innerHTML.replace(/id:([^"<]+)/gmi, 'id:'+furnitureId)
@@ -80,7 +80,9 @@ searchBar.addEventListener('input', debounce(1000, false, search))
 detailsBackButton.addEventListener('click', function () {
   details.style.zIndex = 0
 })
-furnitureId.addEventListener('click', furnitureId.select)
+
+furnitureIdField.addEventListener('click', furnitureIdField.select)
+
 results.addEventListener('click', function (evt) {
   evt.path.forEach(function (elem) {
     if(elem.dataset && elem.dataset.id) {
