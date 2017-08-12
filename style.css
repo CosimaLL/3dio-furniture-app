@@ -184,6 +184,7 @@ a {
 #details #back-button {
     display: none;
     float: left;
+    cursor: pointer;
 }
 
 #details p {
