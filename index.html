@@ -102,8 +102,60 @@
       <button id="codepen-button" type="submit">Open in codepen</button>
     </form>
     </p>
+
+  <div class="tab-box">
+    <nav>
+      <ul>
+        <li class="active" data-tab="aframe">A-Frame</li>
+        <li data-tab="three">Three.js</li>
+      </ul>
+    </nav>
+    <div class="tab active" id="aframe">
+      <p>Use the following snippet with <a href="https://aframe.io">A-Frame</a>:
+      <pre><code id="code-snippet-aframe" class="language-markup">&lt;html&gt;
+&lt;head&gt;
+  &lt;script src="https://aframe.io/releases/0.6.1/aframe.min.js"&gt;&lt;/script&gt;
+  &lt;script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;a-scene antialias="true"&gt;
+    &lt;a-entity io3d-furniture="id:a2d91985-6d60-43ef-b660-0d6ed370bb6f" position="0 0 0"&gt;&lt;/a-entity&gt;
+  &lt;/a-scene&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </p>
+    </div>
+    <div class="tab" id="three">
+      <p>Use the following snippet with <a href="https://threejs.org">Three.js</a>:
+      <pre><code id="code-snippet-three" class="language-javascript">
+// loading method
+function loadFurniture (furniture, id) {
+  return io3d.furniture.get(id).then(function (result) {
+    furniture.set(result.data3d)
+  })
+}
+// init
+var renderer = new THREE.WebGLRenderer()
+var scene = new THREE.Scene()
+var cam = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100)
+
+var furniture = new io3d.aFrame.three.Data3dView({parent: scene})
+loadFurniture(furniture, 'a2d91985-6d60-43ef-b660-0d6ed370bb6f')
+
+document.body.appendChild(renderer.domElement)
+
+requestAnimationFrame(function render() {
+  renderer.render(scene, cam)
+  requestAnimationFrame(render)
+})
+      </code></pre>
+      </p>
+    </div>
+
+<!--
+
     <p>Use the following snippet with <a href="https://aframe.io">A-Frame</a>:
-    <pre><code id="code-snippet" class="language-markup">&lt;html&gt;
+    <pre><code id="code-snippet-aframe" class="language-markup">&lt;html&gt;
   &lt;head&gt;
     &lt;script src="https://aframe.io/releases/0.6.1/aframe.min.js"&gt;&lt;/script&gt;
     &lt;script src="https://3d.io/releases/3dio-js/1.x.x-beta/3dio.min.js"&gt;&lt;/script&gt;
@@ -115,6 +167,32 @@
   &lt;/body&gt;
 &lt;/html&gt;</code></pre>
     </p>
+
+    <p>Use the following snippet with <a href="https://threejs.org">Three.js</a>:
+    <pre><code id="code-snippet-three" class="language-javascript">
+// loading method
+function loadFurniture (furniture, id) {
+  return io3d.furniture.get(id).then(function (result) {
+    furniture.set(result.data3d)
+  })
+}
+// init
+var renderer = new THREE.WebGLRenderer()
+var scene = new THREE.Scene()
+var cam = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100)
+
+var furniture = new io3d.aFrame.three.Data3dView({parent: scene})
+loadFurniture(furniture, 'a2d91985-6d60-43ef-b660-0d6ed370bb6f')
+
+document.body.appendChild(renderer.domElement)
+
+requestAnimationFrame(function render() {
+  renderer.render(scene, cam)
+  requestAnimationFrame(render)
+})
+    </code></pre>
+    </p>
+-->
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>

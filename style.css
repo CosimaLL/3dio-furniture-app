@@ -259,3 +259,37 @@ a {
         display: block;
     }
 }
+
+/* tabs */
+
+.tab {
+  display: none;
+  padding-top: 0.5em;
+}
+
+.tab.active {
+  display: block;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  padding: 0.25em 0.125em;
+  border-radius: 0.125em 0.125em 0 0;
+  /*border: 1px solid black;
+  border-bottom: none;*/
+  color: #888;
+}
+
+nav ul li.active {
+  background: white;
+  border-bottom: 3px solid black;
+  position: relative;
+  top: 1px;
+  color: black;
+}
