@@ -142,10 +142,13 @@ function tabify(containerSelector) {
   var root = document.querySelector(containerSelector)
   var tabs = Array.from(root.querySelectorAll('.tab'))
   var tabLinks = Array.from(root.querySelectorAll('li[data-tab]'))
-  tabLinks.forEach((link) => link.addEventListener('click', (evt) => {
-    tabs.forEach((tab) => tab.classList.remove('active'))
-    document.getElementById(evt.target.dataset.tab).classList.add('active')
-    tabLinks.forEach((link) => link.classList.remove('active'))
-    evt.target.classList.toggle('active')
-  }))
+  
+  tabLinks.forEach(function(link) {
+    link.addEventListener('click', function(evt) {
+      tabs.forEach(function(tab) { tab.classList.remove('active') })
+      tabLinks.forEach(function(tabLink) { tabLink.classList.remove('active') })
+      document.getElementById(evt.target.dataset.tab).classList.add('active')
+      evt.target.classList.toggle('active')
+    })
+  })
 }
