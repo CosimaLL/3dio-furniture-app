@@ -21,7 +21,7 @@ function search () {
   results.textContent = 'Searching...'
   // start search ...
   io3d.furniture
-    .search(searchBar.value)
+    .search(searchBar.value, { limit: 200 })
     // ... and update view when ready
     .then(updateSearchResultsView)
     // ... or catch errors
